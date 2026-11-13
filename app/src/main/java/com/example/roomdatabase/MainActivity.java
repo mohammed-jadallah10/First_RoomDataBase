@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         Button btn = findViewById(R.id.button);
         btn.setOnClickListener(v -> {addStudent();});
 
+        Button delete_btn = findViewById(R.id.button2);
+        delete_btn.setOnClickListener(v -> DeleteAllStudent());
+
 
 
 
@@ -106,4 +109,10 @@ public class MainActivity extends AppCompatActivity {
                 .show();
         }
 
+
+        private void DeleteAllStudent(){
+        new AlertDialog.Builder(this).setTitle("Delete All Student").setMessage("Are you sure about confirm delete ?").setPositiveButton("Yes" ,
+                ((dialog, which) -> {AppDatabase.IO.execute(() -> Dao.DeleteAllData());}))
+                .setNegativeButton("Cancel" , null).show();
+        }
 }

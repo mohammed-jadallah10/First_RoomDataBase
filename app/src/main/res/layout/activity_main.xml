@@ -63,18 +63,19 @@
     <Button
         android:id="@+id/button"
         android:layout_width="110dp"
-        app:layout_constraintStart_toStartOf="@id/thr_ed"
-        app:layout_constraintTop_toBottomOf="@id/thr_ed"
-
-        app:layout_constraintEnd_toEndOf="@id/thr_ed"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="#A64B4B"
-        android:textColor="@color/white"
-        android:background="@drawable/floating_shape"
-
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+
+        android:background="@drawable/floating_shape"
+        android:backgroundTint="#A64B4B"
         android:text="Add"
-      />
+        android:textColor="@color/white"
+
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/thr_ed" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Rv"
@@ -82,11 +83,27 @@
         android:layout_height="450dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/floating_shape"
+        android:backgroundTint="#A64B4B"
+        android:text="Delete All"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

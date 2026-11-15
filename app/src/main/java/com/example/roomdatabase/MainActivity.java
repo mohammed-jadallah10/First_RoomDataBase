@@ -1,5 +1,7 @@
 package com.example.roomdatabase;
 
+import static android.app.ProgressDialog.show;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -12,11 +14,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
-    private StudentDao Dao ;
+    private StudentViewModel viewmodel ;
      EditText username , userEmail , password ;
 
 
@@ -26,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Dao = AppDatabase.getInstance(this).studentDao();
         username = findViewById(R.id.first_ed);
         userEmail = findViewById(R.id.soc_ed);
         password = findViewById(R.id.thr_ed);
@@ -35,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
+        viewmodel = new ViewModelProvider(this).get(StudentViewModel.class);
 
-        Dao.getAllStudents().observe(this , adapter::setStudent);
+
+        viewmodel.getAllStudents().observe(this , adapter::setStudent);
 
 
         Button btn = findViewById(R.id.button);
@@ -75,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
          Student s  = new Student( name , email , u_password);
-          AppDatabase.IO.execute(() -> Dao.InsertData(s));
-
+             viewmodel.insert(s);
           username.setText("");
           password.setText("");
           userEmail.setText("");
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (i.isEmpty()) return;
                     s.setEmail(i);
-                    AppDatabase.IO.execute(() -> Dao.UpdateData(s));
+                    viewmodel.update(s);
                 }))
                 .setNegativeButton("Cancel" , null)
                 .show();
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         private void deleteStudent(Student s){
         new AlertDialog.Builder(this).setTitle("Delete Student")
                 .setPositiveButton("Delete" , ((dialog, which) ->
-                        AppDatabase.IO.execute(() -> Dao.deleteStudent(s))))
+                        viewmodel.delete(s)))
                 .setNegativeButton("Cancel" , null)
                 .show();
         }
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
         private void DeleteAllStudent(){
         new AlertDialog.Builder(this).setTitle("Delete All Student").setMessage("Are you sure about confirm delete ?").setPositiveButton("Yes" ,
-                ((dialog, which) -> {AppDatabase.IO.execute(() -> Dao.DeleteAllData());}))
+                ((dialog, which) -> {viewmodel.deleteAllStudents();}))
                 .setNegativeButton("Cancel" , null).show();
         }
 }

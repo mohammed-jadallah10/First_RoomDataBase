@@ -11,7 +11,7 @@ import java.util.List;
 
 @Dao
 public interface StudentDao{
-    @Insert
+    @Insert   //  ما اعطيتو OnConflict لان موجود عندي id(autoGenerate = true) في ال Entity لتمييز العناصر المدخلة
     void InsertData(Student student);
 
     @Update

@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class StudentViewModel extends AndroidViewModel {
-    private StudentsRepository repository ;
+    private final StudentsRepository repository ;
     private final LiveData<List<Student>> getAllStudents ;
     public StudentViewModel(@NonNull Application application) {
         super(application);

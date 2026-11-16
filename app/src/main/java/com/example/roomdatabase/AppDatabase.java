@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Student.class} , version = 1 , exportSchema = false)
+@Database(entities = {Student.class} , version = 2 , exportSchema = false)
 public abstract class AppDatabase  extends RoomDatabase {
     public abstract StudentDao studentDao() ;
     private static volatile AppDatabase instance ;
@@ -32,12 +32,13 @@ public abstract class AppDatabase  extends RoomDatabase {
     }
 
 
-    private static RoomDatabase.Callback roomcallback = new Callback() {
+    private static final RoomDatabase.Callback roomcallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
             IO.execute(() ->{
+                if (instance == null)return;
                 StudentDao dao = instance.studentDao();
                 dao.InsertData(new Student("Mohammed" , "medo@gmail.com" , "1050$&55"));
 
